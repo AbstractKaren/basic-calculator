@@ -1,71 +1,76 @@
 const zero = document.querySelector("#zero");
 zero.addEventListener("click", () => {
-  addToDisplay(0);
+  addToDisplay(0, false);
 });
 
 const one = document.querySelector("#one");
 one.addEventListener("click", () => {
-  addToDisplay(1);
+  addToDisplay(1, false);
 });
 
 const two = document.querySelector("#two");
 two.addEventListener("click", () => {
-  addToDisplay(2);
+  addToDisplay(2, false);
 });
 
 const thr = document.querySelector("#thr");
 thr.addEventListener("click", () => {
-  addToDisplay(3);
+  addToDisplay(3, false);
 });
 
 const fou = document.querySelector("#fou");
 fou.addEventListener("click", () => {
-  addToDisplay(4);
+  addToDisplay(4, false);
 });
 
 const fiv = document.querySelector("#fiv");
 fiv.addEventListener("click", () => {
-  addToDisplay(5);
+  addToDisplay(5, false);
 });
 
 const six = document.querySelector("#six");
 six.addEventListener("click", () => {
-  addToDisplay(6);
+  addToDisplay(6, false);
 });
 
 const sev = document.querySelector("#sev");
 sev.addEventListener("click", () => {
-  addToDisplay(7);
+  addToDisplay(7, false);
 });
 
 const eig = document.querySelector("#eig");
 eig.addEventListener("click", () => {
-  addToDisplay(8);
+  addToDisplay(8, false);
 });
 
 const nin = document.querySelector("#nin");
 nin.addEventListener("click", () => {
-  addToDisplay(9);
+  addToDisplay(9, false);
 });
 
 const add = document.querySelector("#add");
 add.addEventListener("click", () => {
-  addToDisplay(" + ");
+  addToDisplay(" + ", true);
 });
 
 const sub = document.querySelector("#sub");
 sub.addEventListener("click", () => {
-  addToDisplay(" - ");
+  addToDisplay(" - ", true);
 });
 
 const mult = document.querySelector("#mult");
 mult.addEventListener("click", () => {
-  addToDisplay(" x ");
+  addToDisplay(" x ", true);
 });
 
 const div = document.querySelector("#div");
 div.addEventListener("click", () => {
-  addToDisplay(" ÷ ");
+  addToDisplay(" ÷ ", true);
+});
+
+const eq = document.querySelector("#eq");
+eq.addEventListener("click", () => {
+  evaluate();
 });
 
 function addFunct(x, y){
@@ -84,13 +89,16 @@ function divide(x, y){
     return x / y;
 }
 
-function operate(op, first, sec){
+function operate(firstS, op, secS){
+    first = Number(firstS);
+    sec = Number(secS);
+
     switch (op){
-        case "a":
+        case "+":
             return addFunct(first, sec);
-        case "s":
+        case "-":
             return subtract(first, sec);
-        case "m":
+        case "x":
             return multiply(first, sec);
         default:
             return divide(first, sec);
@@ -103,11 +111,19 @@ function clr(){
     display.value = "";
 }
 
-function addToDisplay(char){
+function addToDisplay(char, isOperator){
+    if(display.value.includes("+") || display.value.includes("-") 
+        || display.value.includes("÷") || display.value.includes("x")){
+            if(isOperator){
+                return;
+            }
+    }
     display.value += char;
 }
 
-let first = 0;
-let operator = "a";
-let second = 0;
+function evaluate(){
+    arr = display.value.split(" ");
+    result = operate(arr[0], arr[1], arr[2]);
+    display.value = result;
+}
 
